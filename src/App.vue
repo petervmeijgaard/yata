@@ -7,7 +7,7 @@
       <VInputGroup>
         <VTextInput
           type="text"
-          ref="newTodo"
+          ref="newTodoRef"
           :value="newTodo"
           @input="onInput"
           placeholder="Get stuff done today!"
@@ -23,7 +23,7 @@
         </VInputAddon>
       </VInputGroup>
     </VForm>
-    <VDivider/>
+    <VDivider />
     <VTodoContainer>
       <VTodo
         v-for="todo in todos"
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import VAction from './components/atoms/Action/Action.vue';
 import VActionContainer from './components/atoms/Action/ActionContainer.vue';
@@ -115,86 +116,99 @@ export default {
     VTitle,
   },
 
-  data: () => ({
-    newTodo: '',
-    todos: [],
-  }),
+  setup() {
+    const newTodo = ref('');
+    const newTodoRef = ref(null);
+    const todos = ref([]);
+    const $keyListeners = ref(null);
 
-  mounted() {
-    this.$keyListeners = (event) => {
-      if (event.key === 'n' && (event.altKey)) {
-        this.$refs.newTodo.focus();
-      }
-
-      if (event.key === 'Escape') {
-        this.$refs.newTodo.blur();
-      }
-    };
-
-    document.addEventListener('keydown', this.$keyListeners.bind(this));
-  },
-
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.$keyListeners);
-  },
-
-  methods: {
-    onSubmit() {
-      if (this.newTodo === '') {
+    const onSubmit = () => {
+      if (newTodo.value === '') {
         return;
       }
 
-      this.todos.unshift({
+      todos.value.unshift({
         id: uuidv4(),
-        content: this.newTodo,
+        content: newTodo.value,
         checked: false,
         editMode: false,
       });
 
-      this.newTodo = '';
-    },
+      newTodo.value = '';
+    };
 
-    onInput(event) {
-      this.newTodo = event.target.value;
-    },
+    const onInput = (event) => {
+      newTodo.value = event.target.value;
+    };
 
-    onCheck(todo) {
-      this.todos = this.todos.map((item) => (
+    const onCheck = (todo) => {
+      todos.value = todos.value.map((item) => (
         item.id === todo.id ? { ...item, checked: !item.checked } : item
       ));
-    },
+    };
 
-    onRemove(todo) {
-      this.todos = this.todos.filter((item) => item.id !== todo.id);
-    },
+    const onRemove = (todo) => {
+      todos.value = todos.value.filter((item) => item.id !== todo.id);
+    };
 
-    onEdit(event, todo) {
-      this.todos = this.todos.map((item) => (
+    const onEdit = (event, todo) => {
+      todos.value = todos.value.map((item) => (
         todo.id === item.id ? { ...item, content: event.target.value } : item
       ));
-    },
+    };
 
-    onUpdate(todo) {
+    const onUpdate = (todo) => {
       if (todo.content === '') {
-        this.onRemove(todo);
+        onRemove(todo);
 
         return;
       }
 
-      this.todos = this.todos.map((item) => (
+      todos.value = todos.value.map((item) => (
         item.id === todo.id ? { ...item, editMode: false } : item
       ));
-    },
+    };
 
-    onDoubleClick(todo) {
+    const onDoubleClick = (todo) => {
       if (todo.editMode) {
         return;
       }
 
-      this.todos = this.todos.map((item) => (
+      todos.value = todos.value.map((item) => (
         item.id === todo.id ? { ...item, editMode: true } : item
       ));
-    },
+    };
+
+    onMounted(() => {
+      $keyListeners.value = (event) => {
+        if (event.key === 'n' && (event.altKey)) {
+          newTodoRef.value.$el.focus();
+        }
+
+        if (event.key === 'Escape') {
+          newTodoRef.value.$el.blur();
+        }
+      };
+
+      document.addEventListener('keydown', $keyListeners.value);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener('keydown', $keyListeners.value);
+    });
+
+    return {
+      newTodo,
+      newTodoRef,
+      todos,
+      onSubmit,
+      onInput,
+      onCheck,
+      onRemove,
+      onEdit,
+      onUpdate,
+      onDoubleClick,
+    };
   },
 };
 </script>
