@@ -26,28 +26,28 @@
     <VDivider />
     <VTodoContainer>
       <VTodo
-        v-for="todo in todos"
+        v-for="todo in todoItems.items"
         :key="todo.id"
       >
         <VCheckbox
           :checked="todo.checked"
-          @change="onCheck(todo)"
+          @change="todoItems.check(todo)"
         />
         <VTodoContent
           :is-checked="todo.checked"
           :value="todo.content"
           :edit-mode="todo.editMode"
-          @dblclick="onDoubleClick(todo)"
-          @input="onEdit($event, todo)"
-          @blur="onUpdate(todo)"
-          @keydown.enter="onUpdate(todo)"
+          @dblclick="todoItems.editMode(todo)"
+          @input="todoItems.edit($event, todo)"
+          @blur="todoItems.update(todo)"
+          @keydown.enter="todoItems.update(todo)"
         >
           {{ todo.content }}
         </VTodoContent>
         <VActionContainer>
           <VAction
             v-if="!todo.editMode"
-            @click="onDoubleClick(todo)"
+            @click="todoItems.editMode(todo)"
           >
             <VIcon
               icon="pen"
@@ -56,7 +56,7 @@
           </VAction>
           <VAction
             v-else
-            @click="onUpdate(todo)"
+            @click="todoItems.update(todo)"
           >
             <VIcon
               icon="save"
@@ -64,7 +64,7 @@
             />
           </VAction>
           <VAction
-            @click="onRemove(todo)"
+            @click="todoItems.remove(todo)"
             is-danger
           >
             <VIcon
@@ -79,8 +79,10 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  onMounted, onUnmounted, ref, reactive,
+} from 'vue';
+import { useTodoItems } from '@/hooks';
 import VAction from './components/atoms/Action/Action.vue';
 import VActionContainer from './components/atoms/Action/ActionContainer.vue';
 import VApp from './components/atoms/App/App.vue';
@@ -117,6 +119,7 @@ export default {
   },
 
   setup() {
+    const todoItems = reactive(useTodoItems());
     const newTodo = ref('');
     const newTodoRef = ref(null);
     const todos = ref([]);
@@ -127,56 +130,13 @@ export default {
         return;
       }
 
-      todos.value.unshift({
-        id: uuidv4(),
-        content: newTodo.value,
-        checked: false,
-        editMode: false,
-      });
+      todoItems.add(newTodo.value);
 
       newTodo.value = '';
     };
 
     const onInput = (event) => {
       newTodo.value = event.target.value;
-    };
-
-    const onCheck = (todo) => {
-      todos.value = todos.value.map((item) => (
-        item.id === todo.id ? { ...item, checked: !item.checked } : item
-      ));
-    };
-
-    const onRemove = (todo) => {
-      todos.value = todos.value.filter((item) => item.id !== todo.id);
-    };
-
-    const onEdit = (event, todo) => {
-      todos.value = todos.value.map((item) => (
-        todo.id === item.id ? { ...item, content: event.target.value } : item
-      ));
-    };
-
-    const onUpdate = (todo) => {
-      if (todo.content === '') {
-        onRemove(todo);
-
-        return;
-      }
-
-      todos.value = todos.value.map((item) => (
-        item.id === todo.id ? { ...item, editMode: false } : item
-      ));
-    };
-
-    const onDoubleClick = (todo) => {
-      if (todo.editMode) {
-        return;
-      }
-
-      todos.value = todos.value.map((item) => (
-        item.id === todo.id ? { ...item, editMode: true } : item
-      ));
     };
 
     onMounted(() => {
@@ -198,16 +158,13 @@ export default {
     });
 
     return {
+      todoItems,
+
       newTodo,
       newTodoRef,
       todos,
       onSubmit,
       onInput,
-      onCheck,
-      onRemove,
-      onEdit,
-      onUpdate,
-      onDoubleClick,
     };
   },
 };
