@@ -4,12 +4,6 @@
   </ul>
 </template>
 
-<script>
-export default {
-  name: 'VTodoContainer',
-};
-</script>
-
 <style lang="scss" module>
 .todo-container {
   display: flex;

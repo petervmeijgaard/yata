@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'VApp',
-};
-</script>
-
 <style lang="scss" module>
 .app {
   padding: 2rem;

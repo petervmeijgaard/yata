@@ -5,28 +5,18 @@
   </VCheckbox>
 </template>
 
-<script>
+<script setup>
 import VCheckbox from '../../atoms/VCheckbox/VCheckbox.vue';
 import VCheckboxCheckmark from '../../atoms/VCheckbox/VCheckboxCheckmark.vue';
 import VCheckboxControl from '../../atoms/VCheckbox/VCheckboxControl.vue';
 
-export default {
-  name: 'VCheckbox',
-
-  props: {
-    checked: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+defineProps({
+  checked: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-
-  components: {
-    VCheckbox,
-    VCheckboxCheckmark,
-    VCheckboxControl,
-  },
-};
+});
 </script>
 
 <style lang="scss" module>

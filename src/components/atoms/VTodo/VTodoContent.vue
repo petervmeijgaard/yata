@@ -4,37 +4,31 @@
   </component>
 </template>
 
-<script>
-export default {
-  name: 'VTodoContent',
+<script setup>
+import { computed, useCssModule } from 'vue';
 
-  props: {
-    isChecked: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+const cssModule = useCssModule();
 
-    editMode: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+const props = defineProps({
+  isChecked: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  computed: {
-    as() {
-      return this.editMode ? 'input' : 'div';
-    },
-
-    classNames() {
-      return {
-        [this.$style['is-checked']]: this.isChecked,
-        [this.$style['edit-mode']]: this.editMode,
-      };
-    },
+  editMode: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-};
+});
+
+const as = computed(() => (props.editMode ? 'input' : 'div'));
+
+const classNames = computed(() => ({
+  [cssModule['is-checked']]: props.isChecked,
+  [cssModule['edit-mode']]: props.editMode,
+}));
 </script>
 
 <style lang="scss" module>

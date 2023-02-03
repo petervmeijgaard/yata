@@ -2,12 +2,6 @@
   <hr :class="$style.divider" />
 </template>
 
-<script>
-export default {
-  name: 'VDivider',
-};
-</script>
-
 <style lang="scss" module>
 .divider {
   height: 1px;

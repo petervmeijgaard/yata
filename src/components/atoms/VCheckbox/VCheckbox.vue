@@ -4,12 +4,6 @@
   </label>
 </template>
 
-<script>
-export default {
-  name: 'VCheckbox',
-};
-</script>
-
 <style lang="scss" module>
 .checkbox {
   display: block;

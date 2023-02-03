@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'VInputGroup',
-};
-</script>
-
 <style lang="scss" module>
 .input-group {
   display: flex;

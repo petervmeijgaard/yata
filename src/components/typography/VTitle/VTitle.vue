@@ -4,18 +4,14 @@
   </component>
 </template>
 
-<script>
-export default {
-  name: 'VTitle',
-
-  props: {
-    as: {
-      type: String,
-      required: false,
-      default: 'h1',
-    },
+<script setup>
+defineProps({
+  as: {
+    type: String,
+    required: false,
+    default: 'h1',
   },
-};
+});
 </script>
 
 <style lang="scss" module>
