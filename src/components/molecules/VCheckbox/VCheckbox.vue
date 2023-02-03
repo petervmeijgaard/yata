@@ -5,17 +5,17 @@
   </VCheckbox>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import VCheckbox from '../../atoms/VCheckbox/VCheckbox.vue';
 import VCheckboxCheckmark from '../../atoms/VCheckbox/VCheckboxCheckmark.vue';
 import VCheckboxControl from '../../atoms/VCheckbox/VCheckboxControl.vue';
 
-defineProps({
-  checked: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+type Props = {
+  checked?: boolean;
+};
+
+withDefaults(defineProps<Props>(), {
+  checked: false,
 });
 </script>
 

@@ -1,10 +1,17 @@
 import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 
-const useTodoItems = () => {
-  const items = ref([]);
+type Todo = {
+  id: string;
+  content: string;
+  checked: boolean;
+  editMode: boolean;
+};
 
-  const add = todo => {
+const useTodoItems = () => {
+  const items = ref<Todo[]>([]);
+
+  const add = (todo: string) => {
     items.value.unshift({
       id: uuidv4(),
       content: todo,
@@ -13,23 +20,23 @@ const useTodoItems = () => {
     });
   };
 
-  const check = todo => {
+  const check = (todo: Todo) => {
     items.value = items.value.map(item =>
       item.id === todo.id ? { ...item, checked: !item.checked } : item,
     );
   };
 
-  const remove = todo => {
+  const remove = (todo: Todo) => {
     items.value = items.value.filter(item => item.id !== todo.id);
   };
 
-  const edit = (event, todo) => {
+  const edit = (event: Event, todo: Todo) => {
     items.value = items.value.map(item =>
-      todo.id === item.id ? { ...item, content: event.target.value } : item,
+      todo.id === item.id ? { ...item, content: (event.target as HTMLInputElement).value } : item,
     );
   };
 
-  const update = todo => {
+  const update = (todo: Todo) => {
     if (todo.content === '') {
       remove(todo);
 
@@ -41,7 +48,7 @@ const useTodoItems = () => {
     );
   };
 
-  const editMode = todo => {
+  const editMode = (todo: Todo) => {
     if (todo.editMode) {
       return;
     }

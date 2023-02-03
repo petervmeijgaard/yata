@@ -4,17 +4,17 @@
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, useCssModule } from 'vue';
+
+type Props = {
+  isDanger?: boolean;
+};
 
 const cssModule = useCssModule();
 
-const props = defineProps({
-  isDanger: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  isDanger: false,
 });
 
 const classNames = computed(() => ({

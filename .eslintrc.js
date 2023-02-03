@@ -1,11 +1,4 @@
 module.exports = {
-  settings: {
-    'import/resolver': {
-      alias: {
-        map: [['@', './src']],
-      },
-    },
-  },
   root: true,
   env: {
     browser: true,
@@ -13,12 +6,19 @@ module.exports = {
     node: true,
     'vue/setup-compiler-macros': true,
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier', 'vue'],
-  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'prettier'],
+  plugins: ['prettier', 'vue', 'import'],
+  extends: [
+    'plugin:vue/vue3-essential',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'prettier',
+  ],
   rules: {
     'prettier/prettier': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
