@@ -4,13 +4,13 @@
   </button>
 </template>
 
-<script setup>
-defineProps({
-  disabled: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+<script setup lang="ts">
+type Props = {
+  disabled?: boolean;
+};
+
+withDefaults(defineProps<Props>(), {
+  disabled: false,
 });
 </script>
 

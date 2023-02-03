@@ -48,7 +48,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { useTodoItems } from '@/hooks';
+import { useTodoItems } from './hooks';
 import VAction from './components/atoms/VAction/VAction.vue';
 import VActionContainer from './components/atoms/VAction/VActionContainer.vue';
 import VApp from './components/atoms/VApp/VApp.vue';

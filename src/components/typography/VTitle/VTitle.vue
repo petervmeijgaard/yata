@@ -4,13 +4,13 @@
   </component>
 </template>
 
-<script setup>
-defineProps({
-  as: {
-    type: String,
-    required: false,
-    default: 'h1',
-  },
+<script setup lang="ts">
+type Props = {
+  as?: string;
+};
+
+withDefaults(defineProps<Props>(), {
+  as: 'h1',
 });
 </script>
 

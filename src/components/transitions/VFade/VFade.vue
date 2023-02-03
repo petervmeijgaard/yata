@@ -4,15 +4,15 @@
   </component>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps({
-  isGroup: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+type Props = {
+  isGroup?: boolean;
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  isGroup: false,
 });
 
 const as = computed(() => (props.isGroup ? 'transition-group' : 'transition'));

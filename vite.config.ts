@@ -1,4 +1,5 @@
-import path from 'node:path';
+/* eslint-disable import/no-extraneous-dependencies */
+import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -11,6 +12,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-    }
-  }
+    },
+  },
 });

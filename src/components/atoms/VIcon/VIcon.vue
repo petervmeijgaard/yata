@@ -2,20 +2,16 @@
   <i :class="classNames" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
+type Props = {
+  icon: string;
+  isFixedWidth?: boolean;
+};
 
-  isFixedWidth: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  isFixedWidth: false,
 });
 
 const classNames = computed(() => {

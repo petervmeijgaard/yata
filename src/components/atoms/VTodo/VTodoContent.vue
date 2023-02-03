@@ -4,23 +4,18 @@
   </component>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, useCssModule } from 'vue';
 
 const cssModule = useCssModule();
+type Props = {
+  isChecked?: boolean;
+  editMode?: boolean;
+};
 
-const props = defineProps({
-  isChecked: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  editMode: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  isChecked: false,
+  editMode: false,
 });
 
 const as = computed(() => (props.editMode ? 'input' : 'div'));

@@ -2,13 +2,13 @@
   <input type="checkbox" :class="$style['checkbox-control']" :checked="checked" />
 </template>
 
-<script setup>
-defineProps({
-  checked: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+<script setup lang="ts">
+type Props = {
+  checked?: boolean;
+};
+
+withDefaults(defineProps<Props>(), {
+  checked: false,
 });
 </script>
 
