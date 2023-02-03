@@ -1,8 +1,6 @@
 <template>
   <VApp>
-    <VTitle title="Yet Another Todo App">
-      📝 YATA
-    </VTitle>
+    <VTitle title="Yet Another Todo App"> 📝 YATA </VTitle>
     <VForm @submit.prevent="onSubmit">
       <VInputGroup>
         <VTextInput
@@ -12,27 +10,15 @@
           @input="onInput"
           placeholder="Get stuff done today!"
         />
-        <VInputAddon
-          type="submit"
-          :disabled="newTodo === ''"
-        >
-          <VIcon
-            icon="plus"
-            is-fixed-width
-          />
+        <VInputAddon type="submit" :disabled="newTodo === ''">
+          <VIcon icon="plus" is-fixed-width />
         </VInputAddon>
       </VInputGroup>
     </VForm>
     <VDivider />
     <VTodoContainer>
-      <VTodo
-        v-for="todo in todoItems.items"
-        :key="todo.id"
-      >
-        <VCheckbox
-          :checked="todo.checked"
-          @change="todoItems.check(todo)"
-        />
+      <VTodo v-for="todo in todoItems.items" :key="todo.id">
+        <VCheckbox :checked="todo.checked" @change="todoItems.check(todo)" />
         <VTodoContent
           :is-checked="todo.checked"
           :value="todo.content"
@@ -45,32 +31,14 @@
           {{ todo.content }}
         </VTodoContent>
         <VActionContainer>
-          <VAction
-            v-if="!todo.editMode"
-            @click="todoItems.editMode(todo)"
-          >
-            <VIcon
-              icon="pen"
-              is-fixed-width
-            />
+          <VAction v-if="!todo.editMode" @click="todoItems.editMode(todo)">
+            <VIcon icon="pen" is-fixed-width />
           </VAction>
-          <VAction
-            v-else
-            @click="todoItems.update(todo)"
-          >
-            <VIcon
-              icon="save"
-              is-fixed-width
-            />
+          <VAction v-else @click="todoItems.update(todo)">
+            <VIcon icon="save" is-fixed-width />
           </VAction>
-          <VAction
-            @click="todoItems.remove(todo)"
-            is-danger
-          >
-            <VIcon
-              icon="trash"
-              is-fixed-width
-            />
+          <VAction @click="todoItems.remove(todo)" is-danger>
+            <VIcon icon="trash" is-fixed-width />
           </VAction>
         </VActionContainer>
       </VTodo>
@@ -79,24 +47,22 @@
 </template>
 
 <script>
-import {
-  onMounted, onUnmounted, ref, reactive,
-} from 'vue';
+import { onMounted, onUnmounted, ref, reactive } from 'vue';
 import { useTodoItems } from '@/hooks';
-import VAction from './components/atoms/Action/Action.vue';
-import VActionContainer from './components/atoms/Action/ActionContainer.vue';
-import VApp from './components/atoms/App/App.vue';
-import VForm from './components/atoms/Form/Form.vue';
-import VIcon from './components/atoms/Icon/Icon.vue';
-import VDivider from './components/atoms/Divider/Divider.vue';
-import VInputAddon from './components/atoms/Input/InputAddon.vue';
-import VInputGroup from './components/atoms/Input/InputGroup.vue';
-import VTextInput from './components/atoms/TextInput/TextInput.vue';
-import VTodo from './components/atoms/Todo/Todo.vue';
-import VTodoContainer from './components/atoms/Todo/TodoContainer.vue';
-import VTodoContent from './components/atoms/Todo/TodoContent.vue';
-import VCheckbox from './components/molecules/Checkbox/Checkbox.vue';
-import VTitle from './components/typography/Title/Title.vue';
+import VAction from './components/atoms/VAction/VAction.vue';
+import VActionContainer from './components/atoms/VAction/VActionContainer.vue';
+import VApp from './components/atoms/VApp/VApp.vue';
+import VForm from './components/atoms/VForm/VForm.vue';
+import VIcon from './components/atoms/VIcon/VIcon.vue';
+import VDivider from './components/atoms/VDivider/VDivider.vue';
+import VInputAddon from './components/atoms/VInput/VInputAddon.vue';
+import VInputGroup from './components/atoms/VInput/VInputGroup.vue';
+import VTextInput from './components/atoms/VTextInput/VTextInput.vue';
+import VTodo from './components/atoms/VTodo/VTodo.vue';
+import VTodoContainer from './components/atoms/VTodo/VTodoContainer.vue';
+import VTodoContent from './components/atoms/VTodo/VTodoContent.vue';
+import VCheckbox from './components/molecules/VCheckbox/VCheckbox.vue';
+import VTitle from './components/typography/VTitle/VTitle.vue';
 
 export default {
   name: 'App',
@@ -135,13 +101,13 @@ export default {
       newTodo.value = '';
     };
 
-    const onInput = (event) => {
+    const onInput = event => {
       newTodo.value = event.target.value;
     };
 
     onMounted(() => {
-      $keyListeners.value = (event) => {
-        if (event.key === 'n' && (event.altKey)) {
+      $keyListeners.value = event => {
+        if (event.key === 'n' && event.altKey) {
           newTodoRef.value.$el.focus();
         }
 

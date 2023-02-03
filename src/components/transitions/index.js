@@ -1,1 +1,1 @@
-export * from './Fade';
+export * from './VFade';

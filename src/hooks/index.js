@@ -1,4 +1,4 @@
-import { useTodoItems } from './useTodoItems';
+import useTodoItems from './useTodoItems';
 
 export { useTodoItems };
 
