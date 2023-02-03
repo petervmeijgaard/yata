@@ -2,35 +2,29 @@
   <i :class="classNames" />
 </template>
 
-<script>
-export default {
-  name: 'VIcon',
+<script setup>
+import { computed } from 'vue';
 
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-
-    isFixedWidth: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
   },
 
-  computed: {
-    classNames() {
-      const classNames = ['fas'];
-
-      classNames.push(`fa-${this.icon}`);
-
-      if (this.isFixedWidth) {
-        classNames.push('fa-fw');
-      }
-
-      return classNames;
-    },
+  isFixedWidth: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-};
+});
+
+const classNames = computed(() => {
+  const baseClassNames = ['fas', `fa-${props.icon}`];
+
+  if (props.isFixedWidth) {
+    return [...baseClassNames, `fa-${props.icon}`];
+  }
+
+  return baseClassNames;
+});
 </script>

@@ -2,12 +2,6 @@
   <input :class="$style['text-input']" />
 </template>
 
-<script>
-export default {
-  name: 'VTextInput',
-};
-</script>
-
 <style lang="scss" module>
 .text-input {
   font-size: 1.25rem;

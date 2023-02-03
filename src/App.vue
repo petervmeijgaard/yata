@@ -1,6 +1,6 @@
 <template>
   <VApp>
-    <VTitle title="Yet Another Todo App"> 📝 YATA </VTitle>
+    <VTitle title="Yet Another Todo App"> 📝 YATA</VTitle>
     <VForm @submit.prevent="onSubmit">
       <VInputGroup>
         <VTextInput
@@ -46,8 +46,8 @@
   </VApp>
 </template>
 
-<script>
-import { onMounted, onUnmounted, ref, reactive } from 'vue';
+<script setup>
+import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useTodoItems } from '@/hooks';
 import VAction from './components/atoms/VAction/VAction.vue';
 import VActionContainer from './components/atoms/VAction/VActionContainer.vue';
@@ -64,74 +64,39 @@ import VTodoContent from './components/atoms/VTodo/VTodoContent.vue';
 import VCheckbox from './components/molecules/VCheckbox/VCheckbox.vue';
 import VTitle from './components/typography/VTitle/VTitle.vue';
 
-export default {
-  name: 'App',
+const todoItems = reactive(useTodoItems());
+const newTodo = ref('');
+const newTodoRef = ref(null);
 
-  components: {
-    VAction,
-    VActionContainer,
-    VApp,
-    VDivider,
-    VForm,
-    VIcon,
-    VInputAddon,
-    VInputGroup,
-    VTextInput,
-    VTodo,
-    VTodoContainer,
-    VTodoContent,
-    VCheckbox,
-    VTitle,
-  },
+const onSubmit = () => {
+  if (newTodo.value === '') {
+    return;
+  }
 
-  setup() {
-    const todoItems = reactive(useTodoItems());
-    const newTodo = ref('');
-    const newTodoRef = ref(null);
-    const todos = ref([]);
-    const $keyListeners = ref(null);
+  todoItems.add(newTodo.value);
 
-    const onSubmit = () => {
-      if (newTodo.value === '') {
-        return;
-      }
-
-      todoItems.add(newTodo.value);
-
-      newTodo.value = '';
-    };
-
-    const onInput = event => {
-      newTodo.value = event.target.value;
-    };
-
-    onMounted(() => {
-      $keyListeners.value = event => {
-        if (event.key === 'n' && event.altKey) {
-          newTodoRef.value.$el.focus();
-        }
-
-        if (event.key === 'Escape') {
-          newTodoRef.value.$el.blur();
-        }
-      };
-
-      document.addEventListener('keydown', $keyListeners.value);
-    });
-
-    onUnmounted(() => {
-      document.removeEventListener('keydown', $keyListeners.value);
-    });
-
-    return {
-      todoItems,
-
-      newTodo,
-      newTodoRef,
-      todos,
-      onSubmit,
-      onInput,
-    };
-  },
+  newTodo.value = '';
 };
+
+const onInput = event => {
+  newTodo.value = event.target.value;
+};
+
+const onKeydown = event => {
+  if (event.key === 'n' && event.ctrlKey) {
+    newTodoRef.value.$el.focus();
+  }
+
+  if (event.key === 'Escape') {
+    newTodoRef.value.$el.blur();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('keydown', onKeydown);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', onKeydown);
+});
 </script>

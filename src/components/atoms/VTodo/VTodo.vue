@@ -4,12 +4,6 @@
   </li>
 </template>
 
-<script>
-export default {
-  name: 'VTodo',
-};
-</script>
-
 <style lang="scss" module>
 .todo {
   background-color: #fff;

@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'VActionContainer',
-};
-</script>
-
 <style lang="scss" module>
 .action-container {
   display: flex;

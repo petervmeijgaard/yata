@@ -4,18 +4,14 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: 'VInputAddon',
-
-  props: {
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+<script setup>
+defineProps({
+  disabled: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-};
+});
 </script>
 
 <style lang="scss" module>

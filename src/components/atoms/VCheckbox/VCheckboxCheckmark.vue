@@ -2,12 +2,6 @@
   <span :class="$style['checkbox-checkmark']" />
 </template>
 
-<script>
-export default {
-  name: 'VCheckboxCheckmark',
-};
-</script>
-
 <style lang="scss" module>
 .checkbox-checkmark {
   position: absolute;

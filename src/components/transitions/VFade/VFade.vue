@@ -4,24 +4,18 @@
   </component>
 </template>
 
-<script>
-export default {
-  name: 'VFade',
+<script setup>
+import { computed } from 'vue';
 
-  props: {
-    isGroup: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+const props = defineProps({
+  isGroup: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
+});
 
-  computed: {
-    as() {
-      return this.isGroup ? 'transition-group' : 'transition';
-    },
-  },
-};
+const as = computed(() => (props.isGroup ? 'transition-group' : 'transition'));
 </script>
 
 <style lang="scss">

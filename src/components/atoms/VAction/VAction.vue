@@ -4,26 +4,22 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: 'VAction',
+<script setup>
+import { computed, useCssModule } from 'vue';
 
-  props: {
-    isDanger: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
+const cssModule = useCssModule();
 
-  computed: {
-    classNames() {
-      return {
-        [this.$style['is-danger']]: this.isDanger,
-      };
-    },
+const props = defineProps({
+  isDanger: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-};
+});
+
+const classNames = computed(() => ({
+  [cssModule['is-danger']]: props.isDanger,
+}));
 </script>
 
 <style lang="scss" module>
