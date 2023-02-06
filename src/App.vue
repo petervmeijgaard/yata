@@ -46,7 +46,7 @@
   </VApp>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useTodoItems } from './composables';
 import VAction from './components/atoms/VAction/VAction.vue';
@@ -66,7 +66,7 @@ import VTitle from './components/typography/VTitle/VTitle.vue';
 
 const todoItems = reactive(useTodoItems());
 const newTodo = ref('');
-const newTodoRef = ref(null);
+const newTodoRef = ref();
 
 const onSubmit = () => {
   if (newTodo.value === '') {
@@ -78,17 +78,21 @@ const onSubmit = () => {
   newTodo.value = '';
 };
 
-const onInput = event => {
-  newTodo.value = event.target.value;
+const onInput = (event: Event) => {
+  newTodo.value = (event.target as HTMLInputElement).value;
 };
 
-const onKeydown = event => {
+const onKeydown = (event: KeyboardEvent) => {
+  if (!newTodoRef.value) {
+    return;
+  }
+
   if (event.key === 'n' && event.ctrlKey) {
-    newTodoRef.value.$el.focus();
+    (newTodoRef.value.$el as HTMLInputElement).focus();
   }
 
   if (event.key === 'Escape') {
-    newTodoRef.value.$el.blur();
+    (newTodoRef.value.$el as HTMLInputElement).blur();
   }
 };
 
