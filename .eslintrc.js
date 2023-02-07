@@ -21,6 +21,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
+    'import/no-unresolved': ['error', { ignore: ['^virtual:'] }],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
