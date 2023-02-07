@@ -10,7 +10,7 @@
           @input="onInput"
           placeholder="Get stuff done today!"
         />
-        <VInputAddon type="submit" :disabled="newTodo === ''">
+        <VInputAddon type="submit" :disabled="newTodo === ''" title="Add todo">
           <PlusIcon />
         </VInputAddon>
       </VInputGroup>
